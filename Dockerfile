@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM python:latest
 
 RUN apt update -y
 
@@ -12,11 +12,14 @@ RUN unzip /h2o-3.20.0.5.zip
 
 RUN apt install -y default-jre-headless
 
-RUN apt install -y python3-pip
+RUN pip install requests tabulate scikit-learn colorama future
 
-RUN pip3 install requests tabulate scikit-learn colorama future
+RUN pip install /h2o-3.20.0.5/python/*.whl
 
-RUN pip3 install /h2o-3.20.0.5/python/*.whl
+RUN pip install pandas
+
+COPY *.dataframe /
+COPY cmd.py /cmd.py
 
 COPY cmd.sh /cmd.sh
 
